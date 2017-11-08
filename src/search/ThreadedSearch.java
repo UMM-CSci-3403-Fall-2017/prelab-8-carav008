@@ -46,9 +46,14 @@ public class ThreadedSearch<T> implements Runnable {
     */
 
         Thread[] threads = new Thread[numThreads];
+
+        //Makes the range between numbers so we can add to start variable and get correct
+        //begin and end
         int range = list.size() / numThreads;
         int start = 0;
+
         for (int i = 0; i < numThreads;++i){
+        //Create a multiple new threads
             threads[i] = new Thread(new ThreadedSearch(target,list,start,start + range,answer));
             start = start + range;
             threads[i].start();
@@ -62,9 +67,10 @@ public class ThreadedSearch<T> implements Runnable {
     */
         for(int i = 0; i < numThreads; ++i){
             threads[i].join();
-
         }
 
+
+        //return the correct answer
         return answer.getAnswer();
     }
 
